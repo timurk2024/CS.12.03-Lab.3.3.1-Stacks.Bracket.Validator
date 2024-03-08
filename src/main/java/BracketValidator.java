@@ -2,37 +2,40 @@ import java.util.Stack;
 
 public class BracketValidator {
 
-    // Method called checkValidParentheses that returns a boolean indicating whether a string of brackets is valid or not.
     public static boolean checkValidParentheses(String expression) {
+        // Create a stack to hold opening brackets
+        Stack<Character> stack = new Stack<>();
 
-        // Obtain an array of the brackets (each element is a single bracket).
+        // Iterate over the characters of the string
+        for (char ch : expression.toCharArray()) {
+            // If it's an opening bracket, push to stack
+            if (isLeftBracket(ch)) {
+                stack.push(ch);
+            } else {
+                // In case of a closing bracket
+                // If the stack is empty or the top of the stack is not the matching opening bracket, return false
+                if (stack.isEmpty() || stack.pop() != getReversedBracket(ch)) {
+                    return false;
+                }
+            }
+        }
 
-        // Create a stack.
-
-        // Iterate over the array of brackets.
-
-            // Obtain the reversed version of bracket.
-
-            // Check if the bracket is an opening bracket. If it is, push it onto the stack.
-
-            // If the stack is empty or if the popped bracket is not equal to the reverse bracket of the current bracket, return false as this must mean that the expression is invalid.
-
-        // If the stack is empty after we have finished iterating over the array of brackets, then return true as this must mean that the expression is valid. If the stack is not empty, this must mean that the expression is invalid.
-        return false;
-
+        // If the stack is empty, all brackets were matched correctly
+        return stack.isEmpty();
     }
 
-    // Private helper method called isLeftBracket that returns a boolean value to indicate whether the bracket is a left (opening) bracket.
-    private static boolean isLeftBracket(String bracket) {
-
-        return false;
-
+    // Check if the character is an opening bracket
+    private static boolean isLeftBracket(char ch) {
+        return ch == '(' || ch == '{' || ch == '[';
     }
 
-    // Private helper method called getReversedBracket that returns a String which is the reverse version of the bracket passed to the method.
-    private static String getReversedBracket(String bracket) {
-
-        return null;
-
+    // Get the corresponding opening bracket for a closing one
+    private static char getReversedBracket(char ch) {
+        switch (ch) {
+            case ')': return '(';
+            case '}': return '{';
+            case ']': return '[';
+            default: return '\0';
+        }
     }
 }
